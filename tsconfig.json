@@ -1,3 +1,28 @@
 {
-  "extends": "astro/tsconfigs/strict"
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": "/Users/enriquebarreroligero/Proyectos/Opensistemas/SandBox/Sofia.front",
+    "paths": {
+      "@/db": [
+        "db/*"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+      "@/layouts": [
+        "src/layouts/*"
+      ],
+      "@/store": [
+        "src/store/*"
+      ],
+      "@/components": [
+        "src/components/*"
+      ],
+      "@/components/icons": [
+        "src/components/icons/*"
+      ]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
+  }
 }

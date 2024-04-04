@@ -1,9 +1,15 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "@/layouts/Layout.astro";
+
+if (!Astro.locals.user) {
+	return Astro.redirect("/auth/login");
+}
+
 ---
 
-<Layout title="Sofia.front" description='Front para la IA Sofia de Opensistemas'>
-	<main>
-		
-	</main>
+<Layout
+	title="Sofia.front"
+	description="Front para la IA Sofia de Opensistemas"
+>
+	<main></main>
 </Layout>
