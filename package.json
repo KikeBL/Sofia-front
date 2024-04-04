@@ -13,6 +13,7 @@
     "@astrojs/check": "^0.5.10",
     "@astrojs/db": "^0.10.0",
     "@astrojs/tailwind": "^5.1.0",
+    "@fontsource-variable/tilt-neon": "^5.0.4",
     "astro": "^4.5.14",
     "lucia": "^3.1.1",
     "lucia-adapter-astrodb": "^0.0.7",

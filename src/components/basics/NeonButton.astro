@@ -1,0 +1,11 @@
+---
+interface Props {
+	color: string;
+    text: string;
+}
+
+const { color, text } = Astro.props;
+---
+<button class=`border bg-transparent border-{color}`>
+    {text}
+</button>
