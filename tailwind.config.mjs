@@ -4,10 +4,11 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				'sofia-purple': '#BD2CBF',
-				'sofia-pink': '#BF2489',
+				'sofia-pink': '#bf2489',
 				'sofia-yellow': '#ffe100',
-				'sofia-blue': '#0B438C',
+				'sofia-salmon': '#f5b8a5',
+				'sofia-blue': '#82d2cf',
+				'sofia-purple': '#bc9afa',
 				'sofia-error': '#DD1805',
 				'sofia-success': '#17E788',
 			},

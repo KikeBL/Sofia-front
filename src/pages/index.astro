@@ -5,11 +5,60 @@ if (!Astro.locals.user) {
 	return Astro.redirect("/auth/login");
 }
 
+const response = await fetch(import.meta.env.HOST + "/api/categories");
+const apiPaths = await response.json();
+console.log(apiPaths);
 ---
 
 <Layout
 	title="Sofia.front"
 	description="Front para la IA Sofia de Opensistemas"
 >
-	<main></main>
+	<main class="text-white">
+		<article class="w-2/4 mx-auto mt-24">
+			<h1
+				class="text-6xl text-center font-tilt-neon font-[50] uppercase text-sofia-salmon mb-12 neonOrange text-pretty"
+			>
+				¿Qué estás buscando?
+			</h1>
+			<form>
+				<div class="relative z-0 mb-6 group w-full">
+					<input
+						type="text"
+						name="search"
+						class="autofill:bg-transparent block py-2.5 px-0 w-full text-lg text-white bg-transparent border-0 border-b-2 border-gray-200 appearance-none focus:outline-none focus:ring-0 focus:border-sofia-salmon peer"
+						placeholder=" "
+						id="search"
+						required
+					/>
+					<label
+						for="search"
+						class="absolute text-sm text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sofia-salmon peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+					>
+						<span class="flex gap-2">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="24"
+								height="24"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								class="icon icon-tabler icons-tabler-outline icon-tabler-search"
+								><path
+									stroke="none"
+									d="M0 0h24v24H0z"
+									fill="none"></path><path
+									d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"
+								></path><path d="M21 21l-6 -6"></path></svg
+							>
+							Api o Método
+						</span>
+					</label>
+				</div>
+			</form>
+		</article>
+	</main>
 </Layout>
