@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export function Search({ paths }: { paths: any }) {
-    const [filter, setFilter] = useState("know");
+    const [filter, setFilter] = useState("");
     const filterMethods = (event: any) => { setFilter(event) }
 
     const getColor = (action: string) => {

@@ -31,17 +31,14 @@ const getNeon = ():string => {
 const sofia = new Oas(sofiaSpec);
 
 const paths = sofia.getPaths();
-console.log(paths)
 const filteredPaths = Object.keys(paths).filter(p => p.includes("/"+action+"/"));
 const defaultPath = filteredPaths.filter(p => p.includes("/read"))[0];
 
-console.log(defaultPath)
 const apis = filteredPaths.map(p => {
     let value:any = Object.values(paths[p])[0]
     return { url: p, operation: p.split("/"+action+"/").pop(), value: value, active: (p===defaultPath), defaultPath: defaultPath}
 })
 
-console.log(apis)
 
 ---
 
@@ -49,7 +46,7 @@ console.log(apis)
 	title={""+action}
 	description="Operaciones con"
 >
-    <article class="text-white text-sm">
+    <article class="text-white text-sm h-full">
         <DataReading apis={apis} color={getColor()} neon={getNeon()} client:load/>
     </article>
 </Layout>
