@@ -1,0 +1,61 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import Oas from "oas";
+import sofiaSpec from '../../definitions/openapi.json';
+import { DataReading } from "@/components/DataReading";
+
+const { action } = Astro.params
+
+const getColor = ():string => {
+    if (action === "router") return "hover:border-sofia-green text-sofia-green hover:bg-sofia-green hover:bg-opacity-20 hover:cursor-pointer"
+    if (action?.toString().includes("vector_index")) return "hover:border-sofia-blue text-sofia-blue hover:bg-sofia-blue hover:bg-opacity-20 hover:cursor-pointer"
+    if (action === "datasource") return "hover:border-sofia-yellow text-sofia-yellow hover:bg-sofia-yellow hover:bg-opacity-20 hover:cursor-pointer"
+    if (action === "settings") return "hover:border-sofia-yellow text-sofia-yellow hover:bg-sofia-yellow hover:bg-opacity-20 hover:cursor-pointer"
+    if (action?.toString().includes("knowledge")) return "hover:border-sofia-salmon text-sofia-salmon hover:bg-sofia-salmon hover:bg-opacity-20 hover:cursor-pointer"
+    if (action?.toString().includes("chat")) return "hover:border-sofia-purple text-sofia-purple hover:bg-sofia-purple hover:bg-opacity-20 hover:cursor-pointer"
+    if (action?.toString().includes("upload_file")) return "hover:border-sofia-purple text-sofia-purple hover:bg-sofia-purple hover:bg-opacity-20 hover:cursor-pointer"
+    return "bg-gray-500"
+}
+
+const getNeon = ():string => {
+    if (action === "router") return "neonGreen"
+    if (action?.toString().includes("knowledge")) return "neonSalmon"
+    if (action === "datasource") return "neonYellow"
+    if (action === "settings") return "neonYellow"
+    if (action === "vector_index") return "neonBlue"
+    if (action?.toString().includes("chat")) return "neonPurple"
+    if (action?.toString().includes("upload_file")) return "neonPurple"
+    return "bg-gray-500"
+}
+
+const sofia = new Oas(sofiaSpec);
+
+const paths = sofia.getPaths();
+console.log(paths)
+const filteredPaths = Object.keys(paths).filter(p => p.includes("/"+action+"/"));
+const defaultPath = filteredPaths.filter(p => p.includes("/read"))[0];
+
+console.log(defaultPath)
+const apis = filteredPaths.map(p => {
+    let value:any = Object.values(paths[p])[0]
+    return { url: p, operation: p.split("/"+action+"/").pop(), value: value, active: (p===defaultPath), defaultPath: defaultPath}
+})
+
+console.log(apis)
+
+---
+
+<Layout
+	title={""+action}
+	description="Operaciones con"
+>
+    <article class="text-white text-sm">
+        <DataReading apis={apis} color={getColor()} neon={getNeon()} client:load/>
+    </article>
+</Layout>
+
+<style>
+    article {
+        font-family: "Press Start 2P";
+    }
+</style>

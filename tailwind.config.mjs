@@ -9,12 +9,14 @@ export default {
 				'sofia-salmon': '#f5b8a5',
 				'sofia-blue': '#82d2cf',
 				'sofia-purple': '#bc9afa',
+				'sofia-green': '#05f26c',
 				'sofia-error': '#DD1805',
 				'sofia-success': '#17E788',
 			},
 
 			fontFamily: {
-				'tilt-neon': ['Tilt Neon Variable', 'system-ui']
+				'tilt-neon': ["Tilt Neon Variable", "system-ui"],
+				'press-star': ["Press Start 2P", "system-ui"]
 			}
 		},
 	},
