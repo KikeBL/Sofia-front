@@ -1,0 +1,15 @@
+---
+interface Props {
+    color: string;
+    text: string;
+    neonclass?: string;
+}
+
+const { color, text, neonclass } = Astro.props;
+---
+
+<button
+    class=`border bg-transparent border-${color} hover:bg-${color} px-6 py-2 ${neonclass} font-[50] text-lg`
+>
+    {text}
+</button>

@@ -1,22 +1,29 @@
 ---
+// Supports only weight 400
+import "@fontsource-variable/tilt-neon";
+import "@fontsource/press-start-2p";
 interface Props {
 	title: string;
+	description: string;
 }
 
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html
+	lang="es"
+	class="h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]"
+>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body class="h-full">
 		<slot />
 	</body>
 </html>
@@ -33,19 +40,104 @@ const { title } = Astro.props;
 		);
 	}
 	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
+		font-family: "Tilt Neon Variable", system-ui;
+
 	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
+
+	.neonPink {
+		color: #fff;
+		text-shadow:
+			0 0 7px #bf2489,
+			0 0 10px #bf2489,
+			0 0 21px #bf2489,
+			0 0 42px #bf2489,
+			0 0 82px #bf2489,
+			0 0 92px #bf2489,
+			0 0 102px #bf2489,
+			0 0 112px #bf2489,
+			0 0 142px #bf2489;
+	}
+
+	.neonYellow {
+		color: #fff;
+		text-shadow:
+			0 0 7px #ffe100,
+			0 0 10px #ffe100,
+			0 0 21px #ffe100,
+			0 0 42px #ffe100,
+			0 0 82px #ffe100,
+			0 0 92px #ffe100,
+			0 0 102px #ffe100,
+			0 0 112px #ffe100,
+			0 0 142px #ffe100;
+	}
+
+	.neonGreen {
+		color: #fff;
+		text-shadow:
+			0 0 7px #05f26c,
+			0 0 10px #05f26c,
+			0 0 21px #05f26c,
+			0 0 42px #05f26c,
+			0 0 82px #05f26c,
+			0 0 92px #05f26c,
+			0 0 102px #05f26c,
+			0 0 112px #05f26c,
+			0 0 142px #05f26c;
+	}
+
+	.neonPurple {
+		color: #fff;
+		text-shadow:
+			0 0 7px #bc9afa,
+			0 0 10px #bc9afa,
+			0 0 21px #bc9afa,
+			0 0 42px #bc9afa,
+			0 0 82px #bc9afa,
+			0 0 92px #bc9afa,
+			0 0 102px #bc9afa,
+			0 0 112px #bc9afa,
+			0 0 142px #bc9afa;
+	}
+
+	.neonSalmon {
+		color: #fff;
+		text-shadow:
+			0 0 7px #f5b8a5,
+			0 0 10px #f5b8a5,
+			0 0 21px #f5b8a5,
+			0 0 42px #f5b8a5,
+			0 0 82px #f5b8a5,
+			0 0 92px #f5b8a5,
+			0 0 102px #f5b8a5,
+			0 0 112px #f5b8a5,
+			0 0 142px #f5b8a5;
+	}
+
+	.neonBlue {
+		color: #fff;
+		text-shadow:
+			0 0 7px #82d2cf,
+			0 0 10px #82d2cf,
+			0 0 21px #82d2cf,
+			0 0 42px #82d2cf,
+			0 0 82px #82d2cf,
+			0 0 92px #82d2cf,
+			0 0 102px #82d2cf,
+			0 0 112px #82d2cf,
+			0 0 142px #82d2cf;
+	}
+
+	.fontStar {
+		font-family: "Press Start 2P", system-ui;
+	}
+
+	.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
+	}
+
+	.hidden-scrollbar {
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
 	}
 </style>

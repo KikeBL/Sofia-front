@@ -1,0 +1,1843 @@
+openapi: 3.1.0
+info:
+  title: FastAPI
+  version: 0.1.0
+paths:
+  /admin/router/export:
+    get:
+      tags:
+        - admin
+        - router
+      summary: Get Paths
+      description: >-
+        Función que retorna todas las posibles opciones que puede tomar el
+        agente a la hora de contestar un prompt
+
+        en forma de diccionario
+      operationId: get_paths_admin_router_export_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/router/read/{indicator}:
+    get:
+      tags:
+        - admin
+        - router
+      summary: Get Paths
+      description: >-
+        Función que retorna todas las posibles opciones que puede tomar el
+        agente a la hora de contestar un prompt
+
+        en forma de diccionario
+      operationId: get_paths_admin_router_read__indicator__get
+      parameters:
+        - name: indicator
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Indicator
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/router/create:
+    post:
+      tags:
+        - admin
+        - router
+      summary: Create Path
+      description: >-
+        Función que, dados un indicador y una descripción, crea un camino en el
+        router para esta descripción
+      operationId: create_path_admin_router_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/RouterPath'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/router/update/{indicator}:
+    put:
+      tags:
+        - admin
+        - router
+      summary: Update Path
+      description: >-
+        Función que, dados un indicador y una descripción nueva para SofIA,
+        actualiza la tabla donde se
+
+        encuentran todas las opciones de router si el indicador recibido en la
+        petición es válido
+      operationId: update_path_admin_router_update__indicator__put
+      parameters:
+        - name: indicator
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Indicator
+        - name: new_description
+          in: query
+          required: false
+          schema:
+            anyOf:
+              - type: string
+              - type: 'null'
+            title: New Description
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/router/delete/{indicator}:
+    delete:
+      tags:
+        - admin
+        - router
+      summary: Delete Path
+      operationId: delete_path_admin_router_delete__indicator__delete
+      parameters:
+        - name: indicator
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Indicator
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge/export:
+    get:
+      tags:
+        - admin
+        - knowledge
+      summary: Export Knowledge
+      operationId: export_knowledge_admin_knowledge_export_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/knowledge/import:
+    post:
+      tags:
+        - admin
+        - knowledge
+      summary: Import Knowledge
+      operationId: import_knowledge_admin_knowledge_import_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                anyOf:
+                  - $ref: '#/components/schemas/KnowledgeStructuredModel'
+                  - $ref: '#/components/schemas/KnowledgeUnstructuredModel'
+                  - $ref: '#/components/schemas/KnowledgeSqlModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge/sql/read:
+    get:
+      tags:
+        - admin
+        - knowledge
+      summary: Get Knowledge
+      operationId: get_knowledge_admin_knowledge_sql_read_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/knowledge/sql/read/{knowledge_name}:
+    get:
+      tags:
+        - admin
+        - knowledge
+      summary: Get Knowledge
+      operationId: get_knowledge_admin_knowledge_sql_read__knowledge_name__get
+      parameters:
+        - name: knowledge_name
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Knowledge Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge/sql/create:
+    post:
+      tags:
+        - admin
+        - knowledge
+      summary: Add Knowledge
+      description: >-
+        Este endpoint registra sobre la base de datos de administración un
+        conocimiento que se ejecutará
+
+        periódicamente en el pod correspondiente, siempre y cuando los datos
+        introducidos sean válidos y compatibles
+
+        con el índice sobre el que se quiere insertar este conocimiento.
+      operationId: add_knowledge_admin_knowledge_sql_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/KnowledgeSqlModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge/sql/update:
+    post:
+      tags:
+        - admin
+        - knowledge
+      summary: Update Knowledge
+      operationId: update_knowledge_admin_knowledge_sql_update_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeSqlModel'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge/sql/delete/{knowledge_name}:
+    delete:
+      tags:
+        - admin
+        - knowledge
+      summary: Delete Knowledge
+      operationId: delete_knowledge_admin_knowledge_sql_delete__knowledge_name__delete
+      parameters:
+        - name: knowledge_name
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Knowledge Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge/file/create:
+    post:
+      tags:
+        - admin
+        - knowledge
+      summary: Add Knowledge File
+      operationId: add_knowledge_file_admin_knowledge_file_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/KnowledgeStructuredModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge_direct/addKnowledgePdfDirect:
+    post:
+      tags:
+        - admin
+        - knowledge
+        - admin
+      summary: Add Knowledge Pdf Direct
+      operationId: >-
+        add_knowledge_pdf_direct_admin_knowledge_direct_addKnowledgePdfDirect_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: >-
+                #/components/schemas/Body_add_knowledge_pdf_direct_admin_knowledge_direct_addKnowledgePdfDirect_post
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge_direct/addKnowledgeTxtDirect:
+    post:
+      tags:
+        - admin
+        - knowledge
+        - admin
+      summary: Add Knowledge Txt Direct
+      operationId: >-
+        add_knowledge_txt_direct_admin_knowledge_direct_addKnowledgeTxtDirect_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: >-
+                #/components/schemas/Body_add_knowledge_txt_direct_admin_knowledge_direct_addKnowledgeTxtDirect_post
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge_direct/addKnowledgeCsvDirect:
+    post:
+      tags:
+        - admin
+        - knowledge
+        - admin
+      summary: Add Knowledge Csv Direct
+      operationId: >-
+        add_knowledge_csv_direct_admin_knowledge_direct_addKnowledgeCsvDirect_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: >-
+                #/components/schemas/Body_add_knowledge_csv_direct_admin_knowledge_direct_addKnowledgeCsvDirect_post
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/datasource/export:
+    get:
+      tags:
+        - admin
+        - datasource
+      summary: Export Datasources
+      operationId: export_datasources_admin_datasource_export_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/datasource/import:
+    post:
+      tags:
+        - admin
+        - datasource
+      summary: Import Datasources
+      operationId: import_datasources_admin_datasource_import_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                anyOf:
+                  - $ref: '#/components/schemas/DataSourceGitConnectionModel'
+                  - $ref: '#/components/schemas/DataSourceSQLConnectionModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/datasource/database/read:
+    get:
+      tags:
+        - admin
+        - datasource
+      summary: Get Db Datasource
+      operationId: get_db_datasource_admin_datasource_database_read_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/datasource/database/read/{datasource_name}:
+    get:
+      tags:
+        - admin
+        - datasource
+      summary: Get Db Datasource
+      operationId: get_db_datasource_admin_datasource_database_read__datasource_name__get
+      parameters:
+        - name: datasource_name
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Datasource Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/datasource/database/create:
+    post:
+      tags:
+        - admin
+        - datasource
+      summary: Add Db Datasource
+      description: >-
+        Función que permite añadir una base de datos como nueva fuente de
+        conocimiento para SofIA:
+
+        Recibe:
+            - Una lista de dialectos, en forma de cadena de caracteres, separados por coma
+            - El nombre de una base de datos con la que debe conectar
+        Retorna:
+            - TODO
+      operationId: add_db_datasource_admin_datasource_database_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/DataSourceSQLConnectionModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/datasource/database/update:
+    post:
+      tags:
+        - admin
+        - datasource
+      summary: Add Db Datasource
+      operationId: add_db_datasource_admin_datasource_database_update_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataSourceSQLConnectionModel'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/datasource/database/delete/{datasource_name}:
+    delete:
+      tags:
+        - admin
+        - datasource
+      summary: Delete Datasource
+      operationId: >-
+        delete_datasource_admin_datasource_database_delete__datasource_name__delete
+      parameters:
+        - name: datasource_name
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Datasource Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/datasource/git/read:
+    get:
+      tags:
+        - admin
+        - datasource
+      summary: Get Git Datasources
+      operationId: get_git_datasources_admin_datasource_git_read_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/datasource/git/create:
+    post:
+      tags:
+        - admin
+        - datasource
+      summary: Add Git Datasource
+      operationId: add_git_datasource_admin_datasource_git_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/DataSourceGitConnectionModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge_tool/read:
+    get:
+      tags:
+        - admin
+        - knowledge_tool
+      summary: Get Tools
+      operationId: get_tools_admin_knowledge_tool_read_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/knowledge_tool/read/{tool_name}:
+    get:
+      tags:
+        - admin
+        - knowledge_tool
+      summary: Get Tool
+      operationId: get_tool_admin_knowledge_tool_read__tool_name__get
+      parameters:
+        - name: tool_name
+          in: path
+          required: true
+          schema:
+            title: Tool Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge_tool/create:
+    post:
+      tags:
+        - admin
+        - knowledge_tool
+      summary: Add Knowledge Tool
+      operationId: add_knowledge_tool_admin_knowledge_tool_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/KnowledgeToolModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge_tool/update:
+    post:
+      tags:
+        - admin
+        - knowledge_tool
+      summary: Update Tool
+      operationId: update_tool_admin_knowledge_tool_update_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeToolModel'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/knowledge_tool/delete/{tool_name}:
+    delete:
+      tags:
+        - admin
+        - knowledge_tool
+      summary: Delete Tool
+      operationId: delete_tool_admin_knowledge_tool_delete__tool_name__delete
+      parameters:
+        - name: tool_name
+          in: path
+          required: true
+          schema:
+            title: Tool Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/vector_index/read:
+    get:
+      tags:
+        - admin
+        - vector_index
+      summary: Get Vector Indexes
+      operationId: get_vector_indexes_admin_vector_index_read_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /admin/vector_index/read/{vector_index_name}:
+    get:
+      tags:
+        - admin
+        - vector_index
+      summary: Get Vector Index
+      operationId: get_vector_index_admin_vector_index_read__vector_index_name__get
+      parameters:
+        - name: vector_index_name
+          in: path
+          required: true
+          schema:
+            title: Vector Index Name
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/vector_index/create:
+    post:
+      tags:
+        - admin
+        - vector_index
+      summary: Add Vector Index
+      description: >-
+        Endpoint que sirve para crear índices en el servicio de índices
+        configurado
+
+        (AzureSearch, Qdrant, Postgres vector similarity search...)
+      operationId: add_vector_index_admin_vector_index_create_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/VectorIndexModel'
+              type: array
+              title: Payload
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/vector_index/update:
+    post:
+      tags:
+        - admin
+        - vector_index
+      summary: Update Vector Index
+      operationId: update_vector_index_admin_vector_index_update_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VectorIndexModel'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /admin/vector_index/delete/{vector_index_name}:
+    delete:
+      tags:
+        - admin
+        - vector_index
+      summary: Update Vector Index
+      operationId: update_vector_index_admin_vector_index_delete__vector_index_name__delete
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VectorIndexModel'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chat/text_chat:
+    post:
+      tags:
+        - chat
+      summary: Go
+      description: |-
+        Endpoint to chat with SofIA. Receives the following:
+        -----
+        prompt (Prompt): Complex object -> 
+
+            text: Question asked by user 
+
+            session_id: Identifier of that user 
+
+
+        myfile (UploadFile): Bytes object (inherited from django) -> 
+
+            UploadedFile object received from streamlit widget
+      operationId: go_chat_text_chat_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Prompt'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Go Chat Text Chat Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chat/audio_chat:
+    post:
+      tags:
+        - chat
+        - chat
+      summary: Audio Chat
+      description: >-
+        Endpoint que recibe un fichero de sonido para traducirlo a texto y
+        usarlo como input
+
+        del endpoint /chat
+      operationId: audio_chat_chat_audio_chat_post
+      parameters:
+        - name: text
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Text
+        - name: session_id
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Session Id
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_audio_chat_chat_audio_chat_post'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user_files/upload_file:
+    post:
+      tags:
+        - user_files
+      summary: Store Uploaded File
+      description: |-
+        Receives a file in a form, stores that file in a previously
+        defined folder in backend pod.
+      operationId: store_uploaded_file_user_files_upload_file_post
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: >-
+                #/components/schemas/Body_store_uploaded_file_user_files_upload_file_post
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /profile/settings/save_settings:
+    post:
+      tags:
+        - profile
+        - settings
+      summary: Savesetting
+      description: Save the user settings provided by the user
+      operationId: saveSetting_profile_settings_save_settings_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatEvent'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Savesetting Profile Settings Save Settings Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /profile/settings/get_settings:
+    post:
+      tags:
+        - profile
+        - settings
+      summary: Getsetting
+      description: Returns the user settings assigned to the user that made the request
+      operationId: getSetting_profile_settings_get_settings_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatEvent'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Getsetting Profile Settings Get Settings Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /profile/chat/persist:
+    post:
+      tags:
+        - profile
+        - chat
+      summary: Persist
+      description: Registers a received message into the database
+      operationId: persist_profile_chat_persist_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /profile/chat/threads/:
+    get:
+      tags:
+        - profile
+        - chat
+      summary: Threads
+      description: Returns all the threads related to the profile that sent the request
+      operationId: threads_profile_chat_threads__get
+      parameters:
+        - name: profile
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Profile
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            title: Skip
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 5
+            title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Thread'
+                title: Response Threads Profile Chat Threads  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /profile/chat/threads/{thread}:
+    get:
+      tags:
+        - profile
+        - chat
+      summary: Messages By Thread And Profile
+      description: >-
+        Given a thread identifier and a profile, returns the thread which
+        identifier
+
+        matches the one given by the user, if there is any
+      operationId: messages_by_thread_and_profile_profile_chat_threads__thread__get
+      parameters:
+        - name: thread
+          in: path
+          required: true
+          schema:
+            type: string
+            title: Thread
+        - name: profile
+          in: query
+          required: true
+          schema:
+            type: string
+            title: Profile
+        - name: skip
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+            title: Skip
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+            title: Limit
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+                title: >-
+                  Response Messages By Thread And Profile Profile Chat Threads 
+                  Thread  Get
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chatbot/google_chat/men_in_black:
+    post:
+      tags:
+        - chatbot
+        - google_chat
+      summary: Men In Black
+      description: >-
+        Deletes a user's history from chat database. Should be requested from
+        GMail bot.
+      operationId: men_in_black_chatbot_google_chat_men_in_black_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatEvent'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Men In Black Chatbot Google Chat Men In Black Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chatbot/google_chat/clock_in:
+    post:
+      tags:
+        - chatbot
+        - google_chat
+      summary: Clockin
+      description: >-
+        Once a user has correctly set their settings, this command can be used
+        to clock in
+
+        from the google chat.
+      operationId: clockIn_chatbot_google_chat_clock_in_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatEvent'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Clockin Chatbot Google Chat Clock In Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /chatbot/google_chat/clock_out:
+    post:
+      tags:
+        - chatbot
+        - google_chat
+      summary: Clockout
+      description: >-
+        Once a user has correctly set their settings, this command can be used
+        to clock out
+
+        from the google chat.
+      operationId: clockOut_chatbot_google_chat_clock_out_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatEvent'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response Clockout Chatbot Google Chat Clock Out Post
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    Body_add_knowledge_csv_direct_admin_knowledge_direct_addKnowledgeCsvDirect_post:
+      properties:
+        index_name:
+          type: string
+          title: Index Name
+        column_to_vectorize:
+          type: string
+          title: Column To Vectorize
+        delimiter:
+          type: string
+          title: Delimiter
+        ambit:
+          type: string
+          title: Ambit
+        role:
+          type: string
+          title: Role
+        security_group:
+          type: string
+          title: Security Group
+        file:
+          type: string
+          format: binary
+          title: File
+      type: object
+      required:
+        - index_name
+        - column_to_vectorize
+        - ambit
+        - role
+        - security_group
+        - file
+      title: >-
+        Body_add_knowledge_csv_direct_admin_knowledge_direct_addKnowledgeCsvDirect_post
+    Body_add_knowledge_pdf_direct_admin_knowledge_direct_addKnowledgePdfDirect_post:
+      properties:
+        index_name:
+          type: string
+          title: Index Name
+        ambit:
+          type: string
+          title: Ambit
+        role:
+          type: string
+          title: Role
+        security_group:
+          type: string
+          title: Security Group
+        file:
+          type: string
+          format: binary
+          title: File
+      type: object
+      required:
+        - index_name
+        - ambit
+        - role
+        - security_group
+        - file
+      title: >-
+        Body_add_knowledge_pdf_direct_admin_knowledge_direct_addKnowledgePdfDirect_post
+    Body_add_knowledge_txt_direct_admin_knowledge_direct_addKnowledgeTxtDirect_post:
+      properties:
+        index_name:
+          type: string
+          title: Index Name
+        ambit:
+          type: string
+          title: Ambit
+        role:
+          type: string
+          title: Role
+        security_group:
+          type: string
+          title: Security Group
+        file:
+          type: string
+          format: binary
+          title: File
+      type: object
+      required:
+        - index_name
+        - ambit
+        - role
+        - security_group
+        - file
+      title: >-
+        Body_add_knowledge_txt_direct_admin_knowledge_direct_addKnowledgeTxtDirect_post
+    Body_audio_chat_chat_audio_chat_post:
+      properties:
+        myfile:
+          type: string
+          format: binary
+          title: Myfile
+      type: object
+      required:
+        - myfile
+      title: Body_audio_chat_chat_audio_chat_post
+    Body_store_uploaded_file_user_files_upload_file_post:
+      properties:
+        myfile:
+          type: string
+          format: binary
+          title: Myfile
+      type: object
+      required:
+        - myfile
+      title: Body_store_uploaded_file_user_files_upload_file_post
+    ChatEvent:
+      properties:
+        user:
+          title: User
+        space:
+          title: Space
+        common:
+          title: Common
+      type: object
+      required:
+        - user
+        - space
+        - common
+      title: ChatEvent
+    DataSourceGitConnectionModel:
+      properties:
+        datasource_name:
+          type: string
+          title: Datasource Name
+        type:
+          type: string
+          title: Type
+          default: git
+        clone_url:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Clone Url
+        repo_branch:
+          type: string
+          title: Repo Branch
+        repo_name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Repo Name
+        user_name:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Name
+        user_password:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: User Password
+      type: object
+      required:
+        - datasource_name
+        - repo_branch
+      title: DataSourceGitConnectionModel
+    DataSourceSQLConnectionModel:
+      properties:
+        datasource_name:
+          type: string
+          title: Datasource Name
+        type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Type
+        database_dialect:
+          type: string
+          title: Database Dialect
+        database_path:
+          type: string
+          title: Database Path
+        database_driver:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Database Driver
+        username:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Username
+        password:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Password
+        host:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Host
+        port:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Port
+      type: object
+      required:
+        - datasource_name
+        - database_dialect
+        - database_path
+        - database_driver
+        - username
+        - password
+        - host
+        - port
+      title: DataSourceSQLConnectionModel
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    KnowledgeSqlModel:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        cron:
+          type: string
+          title: Cron
+        datasource_name:
+          type: string
+          title: Datasource Name
+        index_name:
+          type: string
+          title: Index Name
+        ambit:
+          type: string
+          title: Ambit
+        role:
+          type: string
+          title: Role
+        security_group:
+          type: string
+          title: Security Group
+        transformers:
+          anyOf:
+            - type: object
+            - type: 'null'
+          title: Transformers
+        cleaners:
+          anyOf:
+            - type: object
+            - type: 'null'
+          title: Cleaners
+        type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Type
+        sql_query:
+          type: string
+          title: Sql Query
+        incremental_sql_query:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Incremental Sql Query
+      type: object
+      required:
+        - name
+        - description
+        - cron
+        - datasource_name
+        - index_name
+        - ambit
+        - role
+        - security_group
+        - transformers
+        - cleaners
+        - sql_query
+        - incremental_sql_query
+      title: KnowledgeSqlModel
+    KnowledgeStructuredModel:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        cron:
+          type: string
+          title: Cron
+        datasource_name:
+          type: string
+          title: Datasource Name
+        index_name:
+          type: string
+          title: Index Name
+        ambit:
+          type: string
+          title: Ambit
+        role:
+          type: string
+          title: Role
+        security_group:
+          type: string
+          title: Security Group
+        transformers:
+          anyOf:
+            - type: object
+            - type: 'null'
+          title: Transformers
+        cleaners:
+          anyOf:
+            - type: object
+            - type: 'null'
+          title: Cleaners
+        type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Type
+        file_path:
+          type: string
+          title: File Path
+        content_col:
+          type: string
+          title: Content Col
+      type: object
+      required:
+        - name
+        - description
+        - cron
+        - datasource_name
+        - index_name
+        - ambit
+        - role
+        - security_group
+        - transformers
+        - cleaners
+        - file_path
+        - content_col
+      title: KnowledgeStructuredModel
+    KnowledgeToolModel:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        index_name:
+          type: string
+          title: Index Name
+        output_col:
+          anyOf:
+            - items:
+                type: string
+              type: array
+            - type: 'null'
+          title: Output Col
+        threshold:
+          anyOf:
+            - type: integer
+            - type: 'null'
+          title: Threshold
+        similarity_threshold:
+          anyOf:
+            - type: number
+            - type: 'null'
+          title: Similarity Threshold
+          default: -1
+        extra_args:
+          anyOf:
+            - additionalProperties:
+                type: string
+              type: object
+            - type: 'null'
+          title: Extra Args
+      type: object
+      required:
+        - name
+        - description
+        - index_name
+        - output_col
+        - threshold
+        - extra_args
+      title: KnowledgeToolModel
+    KnowledgeUnstructuredModel:
+      properties:
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        cron:
+          type: string
+          title: Cron
+        datasource_name:
+          type: string
+          title: Datasource Name
+        index_name:
+          type: string
+          title: Index Name
+        ambit:
+          type: string
+          title: Ambit
+        role:
+          type: string
+          title: Role
+        security_group:
+          type: string
+          title: Security Group
+        transformers:
+          anyOf:
+            - type: object
+            - type: 'null'
+          title: Transformers
+        cleaners:
+          anyOf:
+            - type: object
+            - type: 'null'
+          title: Cleaners
+        type:
+          anyOf:
+            - type: string
+            - type: 'null'
+          title: Type
+        file_path:
+          type: string
+          title: File Path
+      type: object
+      required:
+        - name
+        - description
+        - cron
+        - datasource_name
+        - index_name
+        - ambit
+        - role
+        - security_group
+        - transformers
+        - cleaners
+        - file_path
+      title: KnowledgeUnstructuredModel
+    Message:
+      properties:
+        thread:
+          type: string
+          title: Thread
+        timestamp:
+          type: string
+          title: Timestamp
+        role:
+          type: string
+          title: Role
+        profile:
+          type: string
+          title: Profile
+        content:
+          type: string
+          title: Content
+      type: object
+      required:
+        - thread
+        - timestamp
+        - role
+        - profile
+        - content
+      title: Message
+    Prompt:
+      properties:
+        text:
+          type: string
+          title: Text
+        session_id:
+          type: string
+          title: Session Id
+      type: object
+      required:
+        - text
+        - session_id
+      title: Prompt
+    RouterPath:
+      properties:
+        indicator:
+          type: string
+          title: Indicator
+        description:
+          type: string
+          title: Description
+      type: object
+      required:
+        - indicator
+        - description
+      title: RouterPath
+    Thread:
+      properties:
+        thread:
+          type: string
+          title: Thread
+        profile:
+          type: string
+          title: Profile
+        label:
+          type: string
+          title: Label
+      type: object
+      required:
+        - thread
+        - profile
+        - label
+      title: Thread
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+              - type: string
+              - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+        - loc
+        - msg
+        - type
+      title: ValidationError
+    VectorFieldModel:
+      properties:
+        name:
+          type: string
+          title: Name
+        field_type:
+          type: string
+          title: Field Type
+        searchable:
+          type: boolean
+          title: Searchable
+      type: object
+      required:
+        - name
+        - field_type
+        - searchable
+      title: VectorFieldModel
+    VectorIndexModel:
+      properties:
+        index_name:
+          type: string
+          title: Index Name
+        vector_algorithm:
+          type: string
+          title: Vector Algorithm
+        fields_schema:
+          anyOf:
+            - items:
+                $ref: '#/components/schemas/VectorFieldModel'
+              type: array
+            - type: 'null'
+          title: Fields Schema
+      type: object
+      required:
+        - index_name
+        - vector_algorithm
+        - fields_schema
+      title: VectorIndexModel
